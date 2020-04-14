@@ -3,6 +3,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, options) => {
     const isProduction = options.name === 'production';
@@ -11,10 +12,15 @@ module.exports = (env, options) => {
         mode: isProduction ? 'production' : 'development',
         devtool: isProduction ? 'none' : 'source-map',
         watch: !isProduction,
-        entry: ['./src/index.js', './src/sass/style.scss'],
+        entry: ['./src/index.js', './src/assets/sass/style.scss'],
         output: {
             path: path.resolve(__dirname, 'dist'),
+            publicPath: '/',
             filename: 'script.js',
+        },
+        devServer: {
+            port: 9000,
+            hot: !isProduction,
         },
 
         module : {
@@ -62,7 +68,10 @@ module.exports = (env, options) => {
             }),
             new MiniCssExtractPlugin({
                 filename: 'style.css'
-            })
+            }),
+            new CopyPlugin([
+                { from: `src/assets/img`, to: 'img' },
+            ]),
         ]
     };
 

@@ -14,8 +14,12 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-        "indent": ["error", 4],
         "class-methods-use-this": "off",
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "linebreak-style": "off",
+        "arrow-parens": ["error", "as-needed"],
+        "object-curly-newline": ["error", {
+            "ObjectPattern": { "multiline": true },
+        }],
     }
 };
