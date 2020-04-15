@@ -1,7 +1,11 @@
 @import "abstract/mixins";
 
 @import 'base/normalize';
+@import 'base/hamburger';
+@import "base/cards";
 
-@import "components/cards";
+@import "base/switch";
+
+@import "layouts/header";
 
 @import "pages/mainPage";
