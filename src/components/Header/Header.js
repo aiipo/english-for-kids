@@ -1,10 +1,13 @@
 class Header {
-  constructor(modes) {
+  constructor(state, modes) {
+    this.state = state;
+    this.menuNames = this.state.map(({ name }) => name);
     this.modes = modes;
-  }
+}
 
   elements = {
     container: document.createElement('div'),
+    menu: document.createElement('ul'),
     hamburger: document.createElement('span'),
     checkbox: document.createElement('input'),
   };
@@ -14,10 +17,11 @@ class Header {
   }
 
   handleClick = ({ target }) => {
-    if (target.contains(this.elements.hamburger)) {
+    if (target === this.elements.hamburger) {
       this.elements.hamburger.classList.toggle('expanded');
+      this.elements.menu.classList.toggle('expanded');
     }
-    if (target.contains(this.elements.checkbox)) {
+    if (target === this.elements.checkbox) {
       this.elements.checkbox.toggleAttribute('checked');
     }
   };
@@ -33,6 +37,7 @@ class Header {
   createNavigation() {
     const nav = document.createElement('nav');
     nav.append(this.createHamburger());
+    nav.append(this.createMenu());
     return nav;
   }
 
@@ -44,6 +49,19 @@ class Header {
 
     this.elements.hamburger.append(line);
     return this.elements.hamburger;
+  }
+
+  createMenu() {
+    this.elements.menu.innerHTML = '';
+    this.elements.menu.setAttribute('class', 'navigation');
+    this.menuNames.unshift('Main Page');
+    this.menuNames.forEach(name => {
+      const link = document.createElement('a');
+      link.classList.add('nav__link');
+      link.innerHTML = name;
+      this.elements.menu.append(link);
+    });
+    return this.elements.menu;
   }
 
   createModeSwitch() {

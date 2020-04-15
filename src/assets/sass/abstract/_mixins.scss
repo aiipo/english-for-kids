@@ -14,7 +14,6 @@
 @mixin transition($parameters: all 0.5s ease) {
   -webkit-transition: $parameters;
   -moz-transition: $parameters;
-  -ms-transition: $parameters;
   -o-transition: $parameters;
   transition: $parameters;
 }
