@@ -4,3 +4,24 @@
   font-weight: $weight;
   font-style: $style;
 }
+
+@mixin transform($transform) {
+  -ms-transform: $transform;
+  -webkit-transform: $transform;
+  transform: $transform;
+}
+
+@mixin transition($parameters: all 0.5s ease) {
+  -webkit-transition: $parameters;
+  -moz-transition: $parameters;
+  -o-transition: $parameters;
+  transition: $parameters;
+}
+
+@mixin media-tablet {
+  @media (max-width: 375px) { @content; }
+}
+
+@mixin media-mobile {
+  @media (max-width: 1080px) { @content; }
+}
