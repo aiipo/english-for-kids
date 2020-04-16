@@ -20,7 +20,16 @@ class CardList {
   }
 
   handleClick = ({ target }) => {
-    if (!(target.getAttribute('class') === 'rotate')) return;
+    this.rotateCard(target);
+    this.playAudio(target);
+  };
+
+  findCard(DOMCard) {
+    return this.cards.find(cardObj => cardObj.elements.card === DOMCard);
+  }
+
+  rotateCard(target) {
+    if (!target.classList.contains('rotate')) return;
     const cards = this.wordsList.querySelectorAll('.card');
     for (let i = 0; i < cards.length; i++) {
       const parent = target.closest('.card');
@@ -36,7 +45,17 @@ class CardList {
         break;
       }
     }
-  };
+  }
+
+  playAudio(target) {
+    const parent = target.closest('.card');
+    if (target.classList.contains('rotate')) return;
+    if (parent && parent.classList.contains('translate')) return;
+    const card = this.findCard(parent);
+    if (card) {
+      card.playAudio();
+    }
+  }
 
   createContainer() {
     this.elements.container.classList.add('card-container');

@@ -12,13 +12,16 @@ class Card {
     this.mode = MODES.train;
   }
 
+  elements = {
+    card: document.createElement('div'),
+  };
+
   createElement() {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.append(this.createFront());
-    card.append(this.createBack());
-    card.append(this.createRotate());
-    return card;
+    this.elements.card.classList.add('card');
+    this.elements.card.append(this.createFront());
+    this.elements.card.append(this.createBack());
+    this.elements.card.append(this.createRotate());
+    return this.elements.card;
   }
 
   createFront() {
@@ -41,6 +44,12 @@ class Card {
     const rotate = document.createElement('div');
     rotate.classList.add('rotate');
     return rotate;
+  }
+
+  playAudio() {
+    const audio = new Audio(this.audioSrc);
+    // add check of current mode
+    audio.play().then();
   }
 
   changeMode(mode) {

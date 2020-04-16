@@ -72,6 +72,7 @@ module.exports = (env, options) => {
             }),
             new CopyPlugin([
                 { from: `src/assets/img`, to: 'img' },
+                { from: `src/assets/audio`, to: 'audio' },
             ]),
         ]
     };
