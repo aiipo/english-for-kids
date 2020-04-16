@@ -9,10 +9,21 @@ class CardList {
       this.wordsList.append(card.createElement());
       return card;
     });
+    this.elements.container.append(this.createButtons());
+    this.addListeners();
   }
 
   elements = {
     container: document.createElement('div'),
+  };
+
+  game = {
+    startGameBtn: document.createElement('button'),
+    isGame: false,
+    words: null,
+    currentWord: null,
+    currentWordAudio: document.createElement('audio'),
+    soundEffects: document.createElement('audio'),
   };
 
   addListeners() {
@@ -22,6 +33,7 @@ class CardList {
   handleClick = ({ target }) => {
     this.rotateCard(target);
     this.playAudio(target);
+    this.startGame(target);
   };
 
   findCard(DOMCard) {
@@ -29,7 +41,7 @@ class CardList {
   }
 
   rotateCard(target) {
-    if (!target.classList.contains('rotate')) return;
+    if (!target.classList.contains('rotate') || this.game.isGame) return;
     const cards = this.wordsList.querySelectorAll('.card');
     for (let i = 0; i < cards.length; i++) {
       const parent = target.closest('.card');
@@ -57,10 +69,67 @@ class CardList {
     }
   }
 
+  requestPlayAudio(url) {
+    if (url) {
+      const audio = new Audio(url);
+      audio.play().then();
+    }
+  }
+
+  startGame(target) {
+    if (this.game.isGame) { // playing
+      const parent = target.closest('.card');
+      if (parent && parent.contains(target)) {
+        if (this.findCard(parent) === this.game.currentWord) {
+          if (!target.classList.contains('inactive')) {
+            this.requestPlayAudio('/src/assets/audio/correct.mp3');
+          }
+          target.classList.add('inactive');
+          if (this.game.words && this.game.words.length) {
+            this.nextWord();
+          } else { // End game
+          }
+        } else if (!target.classList.contains('inactive')) {
+          this.requestPlayAudio('/src/assets/audio/error.mp3');
+        }
+      }
+    }
+    if (target === this.game.startGameBtn) {
+      if (!(this.game.startGameBtn.classList.contains('repeat'))) { // init game
+        this.game.isGame = true;
+        this.game.startGameBtn.classList.add('repeat');
+        this.game.words = this.getCardsForGame();
+        this.nextWord();
+      } else { // repeat an audio
+        this.game.currentWordAudio.play().then();
+      }
+    }
+  }
+
+  nextWord() {
+    if (this.game.words && this.game.words.length) {
+      this.game.currentWord = this.game.words.pop();
+      this.game.currentWordAudio.src = this.game.currentWord.audioSrc;
+      this.game.currentWordAudio.play().then();
+    }
+  }
+
+  getCardsForGame() {
+    return this.shuffleArray([...this.cards]);
+  }
+
+  shuffleArray(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      // eslint-disable-next-line no-param-reassign
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
   createContainer() {
     this.elements.container.classList.add('card-container');
     this.elements.container.append(this.createRating());
-    this.addListeners();
     return this.elements.container;
   }
 
@@ -70,11 +139,23 @@ class CardList {
     return rating;
   }
 
+  createButtons() {
+    const buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+
+    this.game.startGameBtn.classList.add('start-game', 'none');
+    this.game.startGameBtn.innerHTML = 'Start game';
+
+    buttons.append(this.game.startGameBtn);
+    return buttons;
+  }
+
   getWords() {
     return this.wordsList;
   }
 
   changeMode(mode) {
+    this.game.startGameBtn.classList.toggle('none');
     this.cards.forEach(card => card.changeMode(mode));
   }
 }
