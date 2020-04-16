@@ -8,17 +8,30 @@ const MODES = {
   PLAY: 'play',
 };
 
+let currentMode = MODES.TRAIN;
+
 function init() {
   const app = document.getElementById('app');
   if (!app) return;
   const appContainer = document.createElement('div');
   appContainer.setAttribute('id', 'app-container');
 
-  const header = new Header(cardsData[0], MODES);
+  function changeMode() {
+    currentMode = currentMode === MODES.TRAIN ? MODES.PLAY : MODES.TRAIN;
+    // eslint-disable-next-line no-use-before-define
+    cards.changeMode(currentMode);
+  }
+
+  const header = new Header(cardsData[0], {
+    modes: MODES,
+    callbacks: {
+      changeMode: () => changeMode(),
+    },
+  });
   appContainer.append(header.createContainer());
 
-  const mainPage = new CardList(cardsData[1]);
-  appContainer.append(mainPage.getWords());
+  const cards = new CardList(cardsData[1], currentMode);
+  appContainer.append(cards.getWords());
 
   app.append(appContainer);
 }

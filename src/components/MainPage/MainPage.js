@@ -17,6 +17,10 @@ class MainPage {
     return container;
   }
 
+  changeMode(mode) {
+    this.cards.forEach(card => card.changeMode(mode));
+  }
+
   getPage() {
     return this.cardsDom;
   }

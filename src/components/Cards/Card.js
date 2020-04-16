@@ -1,15 +1,10 @@
-const MODES = {
-  train: 'train',
-  play: 'play',
-};
-
 class Card {
-  constructor({ word, translation, image, audioSrc }) {
+  constructor({ word, translation, image, audioSrc }, mode = 'train') {
     this.word = word;
     this.translation = translation;
     this.image = image;
     this.audioSrc = audioSrc;
-    this.mode = MODES.train;
+    this.mode = mode;
   }
 
   elements = {
@@ -48,12 +43,22 @@ class Card {
 
   playAudio() {
     const audio = new Audio(this.audioSrc);
-    // add check of current mode
-    audio.play().then();
+    if (this.mode !== 'play') {
+      audio.play().then();
+    }
+  }
+
+  getCard() {
+    return this.elements.card;
   }
 
   changeMode(mode) {
     this.mode = mode;
+    this.elements.card.classList.toggle('card-cover');
+    const words = this.elements.card.querySelectorAll('.card-header');
+    words.forEach(card => card.classList.toggle('none'));
+    const rotate = this.elements.card.querySelector('.rotate');
+    rotate.classList.toggle('none');
   }
 }
 

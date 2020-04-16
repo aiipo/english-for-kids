@@ -1,11 +1,11 @@
 import Card from './Card';
 
 class CardList {
-  constructor(state) {
+  constructor(state, mode) {
     this.state = state;
     this.wordsList = this.createContainer();
     this.cards = this.state.map(singleState => {
-      const card = new Card(singleState);
+      const card = new Card(singleState, mode);
       this.wordsList.append(card.createElement());
       return card;
     });

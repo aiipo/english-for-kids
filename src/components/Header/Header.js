@@ -1,8 +1,9 @@
 class Header {
-  constructor(state, modes) {
+  constructor(state, { modes, callbacks = {} }) {
     this.state = state;
     this.menuNames = this.state.map(({ name }) => name);
     this.modes = modes;
+    this.changeMode = callbacks.changeMode instanceof Function ? callbacks.changeMode : () => {};
 }
 
   elements = {
@@ -23,6 +24,7 @@ class Header {
     }
     if (target === this.elements.checkbox) {
       this.elements.checkbox.toggleAttribute('checked');
+      this.changeMode();
     }
   };
 
@@ -73,6 +75,7 @@ class Header {
 
     this.elements.checkbox.setAttribute('type', 'checkbox');
     this.elements.checkbox.classList.add('switch-input');
+    this.elements.checkbox.setAttribute('checked', '');
     switchLabel.append(this.elements.checkbox);
 
     const switchSpan = document.createElement('span');
