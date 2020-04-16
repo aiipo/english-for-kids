@@ -11,11 +11,38 @@ class CardList {
     });
   }
 
+  elements = {
+    container: document.createElement('div'),
+  };
+
+  addListeners() {
+    this.elements.container.addEventListener('click', this.handleClick);
+  }
+
+  handleClick = ({ target }) => {
+    if (!(target.getAttribute('class') === 'rotate')) return;
+    const cards = this.wordsList.querySelectorAll('.card');
+    for (let i = 0; i < cards.length; i++) {
+      const parent = target.closest('.card');
+      if (parent === cards[i]) {
+        parent.classList.add('translate');
+        const handleMouseLeave = function () {
+          setTimeout(() => {
+            this.classList.remove('translate');
+            parent.removeEventListener('mouseleave', handleMouseLeave);
+          }, 200);
+        };
+        parent.addEventListener('mouseleave', handleMouseLeave);
+        break;
+      }
+    }
+  };
+
   createContainer() {
-    const container = document.createElement('div');
-    container.classList.add('card-container');
-    container.append(this.createRating());
-    return container;
+    this.elements.container.classList.add('card-container');
+    this.elements.container.append(this.createRating());
+    this.addListeners();
+    return this.elements.container;
   }
 
   createRating() {

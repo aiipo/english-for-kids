@@ -21,5 +21,7 @@ module.exports = {
         "object-curly-newline": ["error", {
             "ObjectPattern": { "multiline": true },
         }],
+        "func-names": ["error", "as-needed"],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     }
 };
