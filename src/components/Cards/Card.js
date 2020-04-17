@@ -1,10 +1,10 @@
 class Card {
-  constructor({ word, translation, image, audioSrc }, mode = 'train') {
+  constructor({ word, translation, image, audioSrc }) {
     this.word = word;
     this.translation = translation;
     this.image = image;
     this.audioSrc = audioSrc;
-    this.mode = mode;
+    this.mode = 'train';
   }
 
   elements = {

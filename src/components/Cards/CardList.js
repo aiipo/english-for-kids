@@ -1,15 +1,16 @@
 import Card from './Card';
 
 class CardList {
-  constructor(state, mode) {
+  constructor(state, callback) {
     this.state = state;
     this.wordsList = this.createContainer();
     this.cards = this.state.map(singleState => {
-      const card = new Card(singleState, mode);
+      const card = new Card(singleState);
       this.wordsList.append(card.createElement());
       return card;
     });
     this.elements.container.append(this.createButtons());
+    this.goToMain = callback instanceof Function ? callback : () => {};
     this.addListeners();
   }
 
@@ -91,6 +92,8 @@ class CardList {
           if (this.game.words && this.game.words.length) {
             this.nextWord();
           } else { // End game
+            this.showEndGame();
+            setTimeout(() => this.goToMain(), 2500);
           }
         } else if (!target.classList.contains('inactive')) {
           this.requestPlayAudio('/src/assets/audio/error.mp3');
@@ -108,6 +111,24 @@ class CardList {
       } else { // repeat an audio
         this.game.currentWordAudio.play().then();
       }
+    }
+  }
+
+  showEndGame() {
+    this.game.rating.style.justifyContent = 'center';
+    const container = document.createElement('div');
+    container.classList.add('result');
+    this.elements.container.append(container);
+    const result = document.createElement('div');
+    container.append(result);
+    if (this.game.errors > 0) {
+      this.game.rating.innerHTML = `${this.game.errors} error${this.game.errors !== 1 ? 's' : ''}`;
+      this.requestPlayAudio('/src/assets/audio/failure.mp3');
+      result.classList.add('result-failure');
+    } else {
+      this.game.rating.innerHTML = 'Win!';
+      this.requestPlayAudio('/src/assets/audio/success.mp3');
+      result.classList.add('result-success');
     }
   }
 

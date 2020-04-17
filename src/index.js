@@ -14,7 +14,8 @@ const cards = index => {
   currentCard = index === 0
     // eslint-disable-next-line no-use-before-define
     ? new MainPage(cardsData[0], ind => changeCard(ind))
-    : new CardList(cardsData[index]);
+    // eslint-disable-next-line no-use-before-define
+    : new CardList(cardsData[index], () => changeCard(0));
   return currentCard;
 };
 
