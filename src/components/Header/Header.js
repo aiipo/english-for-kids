@@ -4,6 +4,7 @@ class Header {
     this.menuNames = this.state.map(({ name }) => name);
     this.modes = modes;
     this.changeMode = callbacks.changeMode instanceof Function ? callbacks.changeMode : () => {};
+    this.changeCard = callbacks.changeCard instanceof Function ? callbacks.changeCard : () => {};
 }
 
   elements = {
@@ -25,6 +26,13 @@ class Header {
     if (target === this.elements.checkbox) {
       this.elements.checkbox.toggleAttribute('checked');
       this.changeMode();
+    }
+    if (target.tagName === 'A') {
+      const links = this.elements.menu.querySelectorAll('.nav__link');
+      const ind = Array.prototype.findIndex.call(links, link => link === target);
+      if (ind !== -1) {
+        this.changeCard(ind);
+      }
     }
   };
 

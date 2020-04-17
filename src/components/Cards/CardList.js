@@ -165,7 +165,7 @@ class CardList {
     return buttons;
   }
 
-  getWords() {
+  getPage() {
     return this.wordsList;
   }
 

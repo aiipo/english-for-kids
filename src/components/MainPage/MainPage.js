@@ -1,7 +1,7 @@
 import MainCard from './MainCard';
 
 class MainPage {
-  constructor(state) {
+  constructor(state, callback) {
     this.state = state;
     this.cardsDom = this.createContainer();
     this.cards = this.state.map(singleState => {
@@ -9,7 +9,20 @@ class MainPage {
       this.cardsDom.append(card.createElement());
       return card;
     });
+    this.changeCard = callback instanceof Function ? callback : () => {};
+    this.cardsDom.addEventListener('click', this.handleClick);
   }
+
+  handleClick = ({ target }) => {
+    const parent = target.parentNode.classList.contains('main-card') ? target.parentNode : false;
+    if (target.classList.contains('main-card') || parent) {
+      const links = this.cardsDom.querySelectorAll('.main-card');
+      const ind = Array.prototype.findIndex.call(links, card => card === target || card === parent);
+      if (ind !== -1) {
+        this.changeCard(ind + 1);
+      }
+    }
+  };
 
   createContainer() {
     const container = document.createElement('div');
