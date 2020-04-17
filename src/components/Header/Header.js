@@ -5,7 +5,8 @@ class Header {
     this.modes = modes;
     this.changeMode = callbacks.changeMode instanceof Function ? callbacks.changeMode : () => {};
     this.changeCard = callbacks.changeCard instanceof Function ? callbacks.changeCard : () => {};
-}
+    this.addListeners();
+  }
 
   elements = {
     container: document.createElement('div'),
@@ -15,14 +16,11 @@ class Header {
   };
 
   addListeners() {
-    this.elements.container.addEventListener('click', this.handleClick);
+    document.addEventListener('click', this.handleClick);
   }
 
   handleClick = ({ target }) => {
-    if (target === this.elements.hamburger) {
-      this.elements.hamburger.classList.toggle('expanded');
-      this.elements.menu.classList.toggle('expanded');
-    }
+    this.closeMenu(target);
     if (target === this.elements.checkbox) {
       this.elements.checkbox.toggleAttribute('checked');
       this.changeMode();
@@ -36,11 +34,20 @@ class Header {
     }
   };
 
+  closeMenu(target) {
+    if (target === this.elements.hamburger || target.parentNode === this.elements.hamburger) {
+      this.elements.hamburger.classList.toggle('expanded');
+      this.elements.menu.classList.toggle('expanded');
+    } else if (target !== this.elements.menu) {
+      this.elements.hamburger.classList.remove('expanded');
+      this.elements.menu.classList.remove('expanded');
+    }
+  }
+
   createContainer() {
     this.elements.container.classList.add('header__container');
     this.elements.container.append(this.createNavigation());
     this.elements.container.append(this.createModeSwitch());
-    this.addListeners();
     return this.elements.container;
   }
 
