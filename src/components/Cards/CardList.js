@@ -19,6 +19,8 @@ class CardList {
 
   game = {
     startGameBtn: document.createElement('button'),
+    rating: document.createElement('div'),
+    errors: 0,
     isGame: false,
     words: null,
     currentWord: null,
@@ -83,6 +85,7 @@ class CardList {
         if (this.findCard(parent) === this.game.currentWord) {
           if (!target.classList.contains('inactive')) {
             this.requestPlayAudio('/src/assets/audio/correct.mp3');
+            this.fillRating(true);
           }
           target.classList.add('inactive');
           if (this.game.words && this.game.words.length) {
@@ -91,6 +94,7 @@ class CardList {
           }
         } else if (!target.classList.contains('inactive')) {
           this.requestPlayAudio('/src/assets/audio/error.mp3');
+          this.fillRating(false);
         }
       }
     }
@@ -98,11 +102,23 @@ class CardList {
       if (!(this.game.startGameBtn.classList.contains('repeat'))) { // init game
         this.game.isGame = true;
         this.game.startGameBtn.classList.add('repeat');
+        this.game.rating.classList.remove('none');
         this.game.words = this.getCardsForGame();
         this.nextWord();
       } else { // repeat an audio
         this.game.currentWordAudio.play().then();
       }
+    }
+  }
+
+  fillRating(isSuccess = false) {
+    const star = document.createElement('div');
+    this.game.rating.append(star);
+    if (isSuccess) {
+      star.classList.add('star-success');
+    } else {
+      star.classList.add('star-error');
+      this.game.errors += 1;
     }
   }
 
@@ -134,9 +150,8 @@ class CardList {
   }
 
   createRating() {
-    const rating = document.createElement('div');
-    rating.classList.add('rating', 'none');
-    return rating;
+    this.game.rating.classList.add('rating', 'none');
+    return this.game.rating;
   }
 
   createButtons() {

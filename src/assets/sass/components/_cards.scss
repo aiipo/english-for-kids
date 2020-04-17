@@ -17,3 +17,35 @@
   margin: 0;
   padding: 0;
 }
+
+/*********
+  Rating
+ *********/
+.rating {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  height: 40px;
+  overflow-x: hidden;
+  line-height: 36px;
+  font-size: 36px;
+  color: #fc6262;
+}
+
+.star-error, .star-success {
+  flex-shrink: 0;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  background-size: 40px 40px;
+}
+
+.star-error {
+  background-image: url('/src/assets/img/star.svg');
+}
+
+.star-success {
+  background-image: url('/src/assets/img/star-win.svg');
+}
