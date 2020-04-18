@@ -23,7 +23,16 @@ const cardsData = [
     {
       name: 'Emotions',
       image: 'img/happy.jpg',
-    }], // for main page
+    },
+    {
+      name: 'Food',
+      image: 'img/candy.jpg',
+    },
+    {
+      name: 'Vegetables',
+      image: 'img/beetroot.jpg',
+    },
+  ], // for main page
   [
     {
       word: 'cry',
@@ -322,6 +331,106 @@ const cardsData = [
       translation: 'смех',
       image: 'img/laugh.jpg',
       audioSrc: 'audio/laugh.mp3',
+    },
+  ],
+  [
+    {
+      word: 'bread',
+      translation: 'хлеб',
+      image: 'img/bread.jpg',
+      audioSrc: 'audio/bread.mp3',
+    },
+    {
+      word: 'broccoli',
+      translation: 'брокколи',
+      image: 'img/broccoli.jpg',
+      audioSrc: 'audio/broccoli.mp3',
+    },
+    {
+      word: 'cabbage',
+      translation: 'капуста',
+      image: 'img/cabbage.jpg',
+      audioSrc: 'audio/cabbage.mp3',
+    },
+    {
+      word: 'cake',
+      translation: 'торт',
+      image: 'img/cake.jpg',
+      audioSrc: 'audio/cake.mp3',
+    },
+    {
+      word: 'candy',
+      translation: 'сладости',
+      image: 'img/candy.jpg',
+      audioSrc: 'audio/candy.mp3',
+    },
+    {
+      word: 'carrot',
+      translation: 'морковка',
+      image: 'img/carrot.jpg',
+      audioSrc: 'audio/carrot.mp3',
+    },
+    {
+      word: 'celery',
+      translation: 'сельдерей',
+      image: 'img/celery.jpg',
+      audioSrc: 'audio/celery.mp3',
+    },
+    {
+      word: 'cheeseburger',
+      translation: 'чизбургер',
+      image: 'img/cheeseburger.jpg',
+      audioSrc: 'audio/cheeseburger.mp3',
+    },
+  ],
+  [
+    {
+      word: 'asparagus',
+      translation: 'спаржа',
+      image: 'img/asparagus.jpg',
+      audioSrc: 'audio/asparagus.mp3',
+    },
+    {
+      word: 'kohlrabi',
+      translation: 'кольраби',
+      image: 'img/kohlrabi.jpg',
+      audioSrc: 'audio/kohlrabi.mp3',
+    },
+    {
+      word: 'eggplant',
+      translation: 'баклажан',
+      image: 'img/eggplant.jpg',
+      audioSrc: 'audio/eggplant.mp3',
+    },
+    {
+      word: 'radish',
+      translation: 'редис',
+      image: 'img/radish.jpg',
+      audioSrc: 'audio/radish.mp3',
+    },
+    {
+      word: 'beansprouts',
+      translation: 'ростки сои',
+      image: 'img/beansprouts.jpg',
+      audioSrc: 'audio/beansprouts.mp3',
+    },
+    {
+      word: 'turnip',
+      translation: 'репа',
+      image: 'img/turnip.jpg',
+      audioSrc: 'audio/turnip.mp3',
+    },
+    {
+      word: 'beetroot',
+      translation: 'свекла',
+      image: 'img/beetroot.jpg',
+      audioSrc: 'audio/beetroot.mp3',
+    },
+    {
+      word: 'spinach',
+      translation: 'шпинат',
+      image: 'img/spinach.jpg',
+      audioSrc: 'audio/spinach.mp3',
     },
   ],
 ];
