@@ -31,6 +31,8 @@ class Header {
       const ind = Array.prototype.findIndex.call(links, link => link === target);
       if (ind !== -1) {
         const mode = this.elements.checkbox.hasAttribute('checked') ? this.modes.TRAIN : this.modes.PLAY;
+        links.forEach(link => link.classList.remove('nav__link-active'));
+        links[ind].classList.add('nav__link-active');
         this.changeCard(ind, mode);
       }
     }
@@ -80,6 +82,7 @@ class Header {
       link.innerHTML = name;
       this.elements.menu.append(link);
     });
+    this.elements.menu.firstChild.className += ' nav__link-active';
     return this.elements.menu;
   }
 
