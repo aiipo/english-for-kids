@@ -18,6 +18,10 @@
   border-width: 1px;
   -webkit-transition: .3s;
   transition: .3s;
+
+  @include media-mobile {
+    max-width: 300px;
+  }
 }
 
 .repeat {

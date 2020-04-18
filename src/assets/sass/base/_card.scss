@@ -96,8 +96,12 @@
     right: 5px;
     -webkit-transition: .3s;
     transition: .3s;
-    -webkit-filter: grayscale(1);
-    filter: grayscale(1);
+    -webkit-filter: opacity(0.5);
+    filter: opacity(0.5);
+    &:hover {
+      -webkit-filter: none;
+      filter: none;
+    }
   }
 }
 
@@ -116,4 +120,11 @@
 
 .inactive {
   opacity: .5;
+}
+
+.main-card:hover,
+.card:hover {
+  -webkit-box-shadow: 0px 0px 8px 9px rgba(0,0,0,0.28);
+  -moz-box-shadow: 0px 0px 8px 9px rgba(0,0,0,0.28);
+  box-shadow: 0px 0px 8px 9px rgba(0,0,0,0.28);
 }

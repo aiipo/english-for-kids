@@ -58,11 +58,15 @@
     }
   }
 
-  @media (max-width: 1080px) {
+  @include media-laptop {
+    max-width: 1000px;
+  }
+
+  @include media-tablet {
     max-width: 650px;
   }
 
-  @media (max-width: 730px) {
+  @include media-mobile {
     max-width: 300px;
   }
 }
