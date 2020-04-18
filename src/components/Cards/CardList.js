@@ -1,11 +1,12 @@
 import Card from './Card';
 
 class CardList {
-  constructor(state, callback) {
+  constructor(state, callback, modes) {
     this.state = state;
     this.wordsList = this.createContainer();
+    this.modes = modes;
     this.cards = this.state.map(singleState => {
-      const card = new Card(singleState);
+      const card = new Card(singleState, modes);
       this.wordsList.append(card.createElement());
       return card;
     });
@@ -191,7 +192,20 @@ class CardList {
   }
 
   changeMode(mode) {
-    this.game.startGameBtn.classList.toggle('none');
+    if (mode === this.modes.PLAY) {
+      this.game.startGameBtn.classList.remove('none');
+    } else {
+      this.game.isGame = false;
+      this.game.startGameBtn.classList.remove('repeat');
+      this.game.rating.classList.add('none');
+      this.game.rating.innerHTML = '';
+      this.game.errors = 0;
+      const inactive = this.wordsList.querySelectorAll('.inactive');
+      if (inactive) {
+        inactive.forEach(el => el.classList.remove('inactive'));
+      }
+      this.game.startGameBtn.classList.add('none');
+    }
     this.cards.forEach(card => card.changeMode(mode));
   }
 }

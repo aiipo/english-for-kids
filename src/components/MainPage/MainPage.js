@@ -1,11 +1,11 @@
 import MainCard from './MainCard';
 
 class MainPage {
-  constructor(state, callback) {
+  constructor(state, callback, modes) {
     this.state = state;
     this.cardsDom = this.createContainer();
     this.cards = this.state.map(singleState => {
-      const card = new MainCard(singleState);
+      const card = new MainCard(singleState, modes);
       this.cardsDom.append(card.createElement());
       return card;
     });
@@ -19,7 +19,7 @@ class MainPage {
       const links = this.cardsDom.querySelectorAll('.main-card');
       const ind = Array.prototype.findIndex.call(links, card => card === target || card === parent);
       if (ind !== -1) {
-        this.changeCard(ind + 1);
+        this.changeCard(ind + 1, this.cards[0].mode);
       }
     }
   };

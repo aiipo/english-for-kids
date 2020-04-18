@@ -10,28 +10,29 @@ const MODES = {
 
 let currentCard = null;
 
-const cards = index => {
-  currentCard = index === 0
-    // eslint-disable-next-line no-use-before-define
-    ? new MainPage(cardsData[0], ind => changeCard(ind))
-    // eslint-disable-next-line no-use-before-define
-    : new CardList(cardsData[index], () => changeCard(0));
-  return currentCard;
-};
-
-let currentMode = MODES.TRAIN;
-
-function changeMode() {
-  currentMode = currentMode === MODES.TRAIN ? MODES.PLAY : MODES.TRAIN;
-  // eslint-disable-next-line no-use-before-define
-  currentCard.changeMode(currentMode);
+function changeMode(mode) {
+  if (mode) {
+    currentCard.changeMode(mode);
+  }
 }
 
-function changeCard(index) {
+function getNewCard(index, mode) {
+  currentCard = index === 0
+    // eslint-disable-next-line no-use-before-define
+    ? new MainPage(cardsData[0], (ind, m) => changeCard(ind, m), MODES)
+    // eslint-disable-next-line no-use-before-define
+    : new CardList(cardsData[index], () => changeCard(0, MODES.PLAY), MODES);
+  if (mode) {
+    changeMode(mode);
+  }
+  return currentCard;
+}
+
+function changeCard(index, mode) {
   const container = document.getElementById('app-container');
   const contentDiv = container.childNodes[1];
   contentDiv.innerHTML = '';
-  contentDiv.append(cards(index).getPage());
+  contentDiv.append(getNewCard(index, mode).getPage());
 }
 
 function init() {
@@ -43,13 +44,13 @@ function init() {
   const header = new Header(cardsData[0], {
     modes: MODES,
     callbacks: {
-      changeMode: () => changeMode(),
-      changeCard: index => changeCard(index),
+      changeMode: mode => changeMode(mode),
+      changeCard: (index, mode) => changeCard(index, mode),
     },
   });
   appContainer.append(header.createContainer());
 
-  appContainer.append(cards(0).getPage());
+  appContainer.append(getNewCard(0).getPage());
 
   app.append(appContainer);
 }

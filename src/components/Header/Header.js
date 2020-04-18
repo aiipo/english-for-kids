@@ -23,13 +23,15 @@ class Header {
     this.closeMenu(target);
     if (target === this.elements.checkbox) {
       this.elements.checkbox.toggleAttribute('checked');
-      this.changeMode();
+      const mode = this.elements.checkbox.hasAttribute('checked') ? this.modes.TRAIN : this.modes.PLAY;
+      this.changeMode(mode);
     }
     if (target.tagName === 'A') {
       const links = this.elements.menu.querySelectorAll('.nav__link');
       const ind = Array.prototype.findIndex.call(links, link => link === target);
       if (ind !== -1) {
-        this.changeCard(ind);
+        const mode = this.elements.checkbox.hasAttribute('checked') ? this.modes.TRAIN : this.modes.PLAY;
+        this.changeCard(ind, mode);
       }
     }
   };

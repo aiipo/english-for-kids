@@ -1,10 +1,11 @@
 class Card {
-  constructor({ word, translation, image, audioSrc }) {
+  constructor({ word, translation, image, audioSrc }, modes) {
     this.word = word;
     this.translation = translation;
     this.image = image;
     this.audioSrc = audioSrc;
-    this.mode = 'train';
+    this.modes = modes;
+    this.mode = this.modes.TRAIN;
   }
 
   elements = {
@@ -43,7 +44,7 @@ class Card {
 
   playAudio() {
     const audio = new Audio(this.audioSrc);
-    if (this.mode !== 'play') {
+    if (this.mode !== this.modes.PLAY) {
       audio.play().then();
     }
   }
@@ -54,11 +55,19 @@ class Card {
 
   changeMode(mode) {
     this.mode = mode;
-    this.elements.card.classList.toggle('card-cover');
-    const words = this.elements.card.querySelectorAll('.card-header');
-    words.forEach(card => card.classList.toggle('none'));
-    const rotate = this.elements.card.querySelector('.rotate');
-    rotate.classList.toggle('none');
+    if (this.mode === this.modes.PLAY) {
+      this.elements.card.classList.add('card-cover');
+      const words = this.elements.card.querySelectorAll('.card-header');
+      words.forEach(card => card.classList.add('none'));
+      const rotate = this.elements.card.querySelector('.rotate');
+      rotate.classList.add('none');
+    } else {
+      this.elements.card.classList.remove('card-cover');
+      const words = this.elements.card.querySelectorAll('.card-header');
+      words.forEach(card => card.classList.remove('none'));
+      const rotate = this.elements.card.querySelector('.rotate');
+      rotate.classList.remove('none');
+    }
   }
 }
 

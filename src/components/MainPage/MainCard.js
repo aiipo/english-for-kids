@@ -1,7 +1,8 @@
 class MainCard {
-  constructor({ name, image }) {
+  constructor({ name, image }, modes) {
     this.name = name;
     this.image = image;
+    this.modes = modes;
   }
 
   elements = {
@@ -17,7 +18,11 @@ class MainCard {
 
   changeMode(mode) {
     this.mode = mode;
-    this.elements.card.classList.toggle('green');
+    if (mode === this.modes.PLAY) {
+      this.elements.card.classList.remove('green');
+    } else {
+      this.elements.card.classList.add('green');
+    }
   }
 }
 
