@@ -44,7 +44,7 @@
           color: darken($color-light, 15%);
           text-decoration: underline;
         }
-        &.nav__link-active {
+        &.nav__link--active {
           color: darken(adjust_color($color-light, $lightness: -30%, $alpha: -0.2), 40%);
         }
       }

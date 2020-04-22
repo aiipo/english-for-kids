@@ -47,26 +47,27 @@ class CardList {
   rotateCard(target) {
     if (!target.classList.contains('rotate') || this.game.isGame) return;
     const cards = this.wordsList.querySelectorAll('.card');
-    for (let i = 0; i < cards.length; i++) {
-      const parent = target.closest('.card');
-      if (parent === cards[i]) {
-        parent.classList.add('translate');
+    const parent = target.closest('.card');
+    cards.forEach(card => {
+      if (parent === card) {
+        card.classList.add('translate');
         const handleMouseLeave = function () {
           setTimeout(() => {
-            this.classList.remove('translate');
-            parent.removeEventListener('mouseleave', handleMouseLeave);
+            card.classList.remove('translate');
+            card.removeEventListener('mouseleave', handleMouseLeave);
           }, 200);
         };
-        parent.addEventListener('mouseleave', handleMouseLeave);
-        break;
+        card.addEventListener('mouseleave', handleMouseLeave);
       }
-    }
+    });
   }
 
   playAudio(target) {
     const parent = target.closest('.card');
-    if (target.classList.contains('rotate')) return;
-    if (parent && parent.classList.contains('translate')) return;
+    if (target.classList.contains('rotate')
+        || (parent && parent.classList.contains('translate'))) {
+      return;
+    }
     const card = this.findCard(parent);
     if (card) {
       card.playAudio();
@@ -80,36 +81,44 @@ class CardList {
     }
   }
 
-  startGame(target) {
-    if (this.game.isGame) { // playing
-      const parent = target.closest('.card');
-      if (parent && parent.contains(target)) {
-        if (this.findCard(parent) === this.game.currentWord) {
-          if (!target.classList.contains('inactive')) {
-            this.requestPlayAudio('/src/assets/audio/correct.mp3');
-            this.fillRating(true);
-          }
-          target.classList.add('inactive');
-          if (this.game.words && this.game.words.length) {
-            this.nextWord();
-          } else { // End game
-            this.showEndGame();
-            setTimeout(() => this.goToMain(), 2500);
-          }
-        } else if (!target.classList.contains('inactive')) {
-          this.requestPlayAudio('/src/assets/audio/error.mp3');
-          this.fillRating(false);
+  initGame() {
+    this.game.isGame = true;
+    this.game.startGameBtn.classList.add('repeat');
+    this.game.rating.classList.remove('none');
+    this.game.words = this.getCardsForGame();
+    this.nextWord();
+  }
+
+  startPlayingGame(target) {
+    const parent = target.closest('.card');
+    if (parent && parent.contains(target)) {
+      if (this.findCard(parent) === this.game.currentWord) {
+        if (!target.classList.contains('card--cover-inactive')) {
+          this.requestPlayAudio('/src/assets/audio/correct.mp3');
+          this.fillRating(true);
         }
+        target.classList.add('card--cover-inactive');
+        if (this.game.words && this.game.words.length) {
+          this.nextWord();
+        } else {
+          this.showEndGame();
+          setTimeout(() => this.goToMain(), 2500);
+        }
+      } else if (!target.classList.contains('card--cover-inactive')) {
+        this.requestPlayAudio('/src/assets/audio/error.mp3');
+        this.fillRating(false);
       }
     }
+  }
+
+  startGame(target) {
+    if (this.game.isGame) {
+      this.startPlayingGame(target);
+    }
     if (target === this.game.startGameBtn) {
-      if (!(this.game.startGameBtn.classList.contains('repeat'))) { // init game
-        this.game.isGame = true;
-        this.game.startGameBtn.classList.add('repeat');
-        this.game.rating.classList.remove('none');
-        this.game.words = this.getCardsForGame();
-        this.nextWord();
-      } else { // repeat an audio
+      if (!this.game.startGameBtn.classList.contains('repeat')) {
+        this.initGame();
+      } else {
         this.game.currentWordAudio.play().then();
       }
     }
@@ -122,24 +131,24 @@ class CardList {
     this.elements.container.append(container);
     const result = document.createElement('div');
     container.append(result);
-    if (this.game.errors > 0) {
+    if (this.game.errors) {
       this.game.rating.innerHTML = `${this.game.errors} error${this.game.errors !== 1 ? 's' : ''}`;
       this.requestPlayAudio('/src/assets/audio/failure.mp3');
-      result.classList.add('result-failure');
+      result.classList.add('result--failure');
     } else {
       this.game.rating.innerHTML = 'Win!';
       this.requestPlayAudio('/src/assets/audio/success.mp3');
-      result.classList.add('result-success');
+      result.classList.add('result--success');
     }
   }
 
-  fillRating(isSuccess = false) {
+  fillRating(isSuccess) {
     const star = document.createElement('div');
     this.game.rating.append(star);
     if (isSuccess) {
-      star.classList.add('star-success');
+      star.classList.add('star--success');
     } else {
-      star.classList.add('star-error');
+      star.classList.add('star--error');
       this.game.errors += 1;
     }
   }
@@ -153,20 +162,20 @@ class CardList {
   }
 
   getCardsForGame() {
-    return this.shuffleArray([...this.cards]);
+    return this.getShuffledArray(this.cards);
   }
 
-  shuffleArray(a) {
-    for (let i = a.length - 1; i > 0; i--) {
+  getShuffledArray(array) {
+    const newArr = [...array];
+    for (let i = newArr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      // eslint-disable-next-line no-param-reassign
-      [a[i], a[j]] = [a[j], a[i]];
+      [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
     }
-    return a;
+    return newArr;
   }
 
   createContainer() {
-    this.elements.container.classList.add('card-container');
+    this.elements.container.classList.add('card__container');
     this.elements.container.append(this.createRating());
     return this.elements.container;
   }
@@ -200,9 +209,9 @@ class CardList {
       this.game.rating.classList.add('none');
       this.game.rating.innerHTML = '';
       this.game.errors = 0;
-      const inactive = this.wordsList.querySelectorAll('.inactive');
+      const inactive = this.wordsList.querySelectorAll('.card--cover-inactive');
       if (inactive) {
-        inactive.forEach(el => el.classList.remove('inactive'));
+        inactive.forEach(el => el.classList.remove('card--cover-inactive'));
       }
       this.game.startGameBtn.classList.add('none');
     }

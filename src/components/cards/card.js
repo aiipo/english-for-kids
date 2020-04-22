@@ -24,7 +24,7 @@ class Card {
     const front = document.createElement('div');
     front.classList.add('front');
     front.style.backgroundImage = `url(${this.image})`;
-    front.innerHTML += `<div class="card-header">${this.word}</div>`;
+    front.innerHTML += `<div class="card--header">${this.word}</div>`;
     return front;
   }
 
@@ -32,7 +32,7 @@ class Card {
     const back = document.createElement('div');
     back.classList.add('back');
     back.style.backgroundImage = `url(${this.image})`;
-    back.innerHTML += `<div class="card-header">${this.translation}</div>`;
+    back.innerHTML += `<div class="card--header">${this.translation}</div>`;
     return back;
   }
 
@@ -56,14 +56,14 @@ class Card {
   changeMode(mode) {
     this.mode = mode;
     if (this.mode === this.modes.PLAY) {
-      this.elements.card.classList.add('card-cover');
-      const words = this.elements.card.querySelectorAll('.card-header');
+      this.elements.card.classList.add('card--cover');
+      const words = this.elements.card.querySelectorAll('.card--header');
       words.forEach(card => card.classList.add('none'));
       const rotate = this.elements.card.querySelector('.rotate');
       rotate.classList.add('none');
     } else {
-      this.elements.card.classList.remove('card-cover');
-      const words = this.elements.card.querySelectorAll('.card-header');
+      this.elements.card.classList.remove('card--cover');
+      const words = this.elements.card.querySelectorAll('.card--header');
       words.forEach(card => card.classList.remove('none'));
       const rotate = this.elements.card.querySelector('.rotate');
       rotate.classList.remove('none');

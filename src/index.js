@@ -17,11 +17,9 @@ function changeMode(mode) {
 }
 
 function getNewCard(index, mode) {
-  currentCard = index === 0
-    // eslint-disable-next-line no-use-before-define
-    ? new MainPage(cardsData[0], (ind, m) => changeCard(ind, m), MODES)
-    // eslint-disable-next-line no-use-before-define
-    : new CardList(cardsData[index], () => changeCard(0, MODES.PLAY), MODES);
+  currentCard = index
+    ? new CardList(cardsData.mainPage[index - 1].set, () => changeCard(0, MODES.PLAY), MODES)
+    : new MainPage(cardsData.mainPage, (ind, m) => changeCard(ind, m), MODES);
   if (mode) {
     changeMode(mode);
   }
@@ -37,11 +35,13 @@ function changeCard(index, mode) {
 
 function init() {
   const app = document.getElementById('app');
-  if (!app) return;
+  if (!app) {
+    return;
+  }
   const appContainer = document.createElement('div');
   appContainer.setAttribute('id', 'app-container');
 
-  const header = new Header(cardsData[0], {
+  const header = new Header(cardsData.mainPage, {
     modes: MODES,
     callbacks: {
       changeMode: mode => changeMode(mode),

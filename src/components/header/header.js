@@ -28,11 +28,11 @@ class Header {
     }
     if (target.tagName === 'A') {
       const links = this.elements.menu.querySelectorAll('.nav__link');
-      const ind = Array.prototype.findIndex.call(links, link => link === target);
+      const ind = Array.from(links).findIndex(link => link === target);
       if (ind !== -1) {
         const mode = this.elements.checkbox.hasAttribute('checked') ? this.modes.TRAIN : this.modes.PLAY;
-        links.forEach(link => link.classList.remove('nav__link-active'));
-        links[ind].classList.add('nav__link-active');
+        links.forEach(link => link.classList.remove('nav__link--active'));
+        links[ind].classList.add('nav__link--active');
         this.changeCard(ind, mode);
       }
     }
@@ -82,30 +82,30 @@ class Header {
       link.innerHTML = name;
       this.elements.menu.append(link);
     });
-    this.elements.menu.firstChild.className += ' nav__link-active';
+    this.elements.menu.firstChild.className += ' nav__link--active';
     return this.elements.menu;
   }
 
   createModeSwitch() {
     const container = document.createElement('div');
-    container.classList.add('switch-container');
+    container.classList.add('switch__container');
 
     const switchLabel = document.createElement('label');
     switchLabel.classList.add('switch');
 
     this.elements.checkbox.setAttribute('type', 'checkbox');
-    this.elements.checkbox.classList.add('switch-input');
+    this.elements.checkbox.classList.add('switch__input');
     this.elements.checkbox.setAttribute('checked', '');
     switchLabel.append(this.elements.checkbox);
 
     const switchSpan = document.createElement('span');
-    switchSpan.classList.add('switch-label');
+    switchSpan.classList.add('switch__label');
     switchSpan.setAttribute('data-on', this.modes.TRAIN);
     switchSpan.setAttribute('data-off', this.modes.PLAY);
     switchLabel.append(switchSpan);
 
     const switchHandle = document.createElement('span');
-    switchHandle.classList.add('switch-handle');
+    switchHandle.classList.add('switch__handle');
     switchLabel.append(switchHandle);
 
     container.append(switchLabel);

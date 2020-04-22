@@ -17,7 +17,7 @@ class MainPage {
     const parent = target.parentNode.classList.contains('main-card') ? target.parentNode : false;
     if (target.classList.contains('main-card') || parent) {
       const links = this.cardsDom.querySelectorAll('.main-card');
-      const ind = Array.prototype.findIndex.call(links, card => card === target || card === parent);
+      const ind = Array.from(links).findIndex(card => card === target || card === parent);
       if (ind !== -1) {
         this.changeCard(ind + 1, this.cards[0].mode);
       }
