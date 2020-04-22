@@ -1,4 +1,4 @@
-import MainCard from './MainCard';
+import MainCard from './mainCard';
 
 class MainPage {
   constructor(state, callback, modes) {

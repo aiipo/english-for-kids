@@ -1,7 +1,7 @@
-import CardList from './components/Cards/CardList';
+import CardList from './components/cards/cardList';
 import cardsData from './components/cardsData';
-import MainPage from './components/MainPage/MainPage';
-import Header from './components/Header/Header';
+import MainPage from './components/mainPage/mainPage';
+import Header from './components/header/header';
 
 const MODES = {
   TRAIN: 'train',
