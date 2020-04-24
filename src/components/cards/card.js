@@ -13,11 +13,14 @@ class Card {
   };
 
   createElement() {
+    const container = document.createElement('div');
+    container.classList.add('card__container-card');
+    container.append(this.elements.card);
     this.elements.card.classList.add('card');
     this.elements.card.append(this.createFront());
     this.elements.card.append(this.createBack());
     this.elements.card.append(this.createRotate());
-    return this.elements.card;
+    return container;
   }
 
   createFront() {

@@ -25,11 +25,17 @@
 }
 
 .repeat {
-  width: 65px;
+  width: 250px;
   font-size: 0;
   background-image: url(/src/assets/img/repeat.svg), $gradient-main;
-  border-radius: 50%;
   background-repeat: no-repeat;
   background-size: 32px 32px, cover;
-  background-position: 50%;
+  background-position: 85%;
+
+  &:before {
+    position: relative;
+    left: -30px;
+    content: 'Repeat';
+    font-size: 30px;
+  }
 }

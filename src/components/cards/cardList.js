@@ -52,12 +52,10 @@ class CardList {
       if (parent === card) {
         card.classList.add('translate');
         const handleMouseLeave = function () {
-          setTimeout(() => {
-            card.classList.remove('translate');
-            card.removeEventListener('mouseleave', handleMouseLeave);
-          }, 200);
+          card.classList.remove('translate');
+          this.removeEventListener('mouseleave', handleMouseLeave);
         };
-        card.addEventListener('mouseleave', handleMouseLeave);
+        card.parentNode.addEventListener('mouseleave', handleMouseLeave);
       }
     });
   }
