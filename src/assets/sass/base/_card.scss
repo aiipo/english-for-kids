@@ -1,0 +1,130 @@
+.main-card {
+  width: 300px;
+  height: 280px;
+  border-radius: $border-radius-size;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+  color: $color-card;
+  display: flex;
+  flex-direction: column;
+  font-family: Roboto, serif;
+  @include font($size: 2.4rem, $height: 3.6rem);
+  text-align: center;
+  text-decoration: none;
+  background: -webkit-gradient(linear,left top,left bottom,from(#fd6a63),color-stop(40%,#feb46b),color-stop(40%,#fff),to(#fff));
+  background: linear-gradient(180deg,#fd6a63,#feb46b 40%,#fff 0,#fff);
+  margin: 20px 25px;
+  cursor: pointer;
+  -webkit-transition: .3s;
+  transition: .3s;
+
+  &.green {
+    background: -webkit-gradient(linear,left top,left bottom,from(#0099ae),color-stop(40%,#00bf82),color-stop(40%,#fff),to(#fff));
+    background: linear-gradient(180deg,#0099ae,#00bf82 40%,#fff 0,#fff);
+  }
+
+  img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 10px solid $color-light;
+    object-fit: cover;
+    margin: 30px auto;
+  }
+}
+
+.card {
+  position: relative;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  display: flex;
+  box-sizing: border-box;
+  justify-content: flex-end;
+  width: 300px;
+  height: 250px;
+  border: 1px solid #ccc;
+  border-radius: $border-radius-size;
+  margin: 20px 25px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.4);
+  -webkit-transition: box-shadow .25s linear, -webkit-transform .7s;
+  transition: box-shadow .25s linear, transform .7s,-webkit-transform .7s;
+
+  .back, .front, .rotate {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  .front,
+  .back {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    -webkit-transition: .3s;
+    transition: .3s;
+  }
+
+  .back {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
+
+  .card--header {
+    margin-top: 200px;
+    padding: 0 15px;
+    font-family: "Roboto", serif;
+    @include font($size: 24px, $height: 45px);
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+    background: $color-light;
+    color: $color-card;
+  }
+
+  .rotate {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url(/src/assets/img/rotate.svg);
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-position: center 16px;
+    bottom: 5px;
+    right: 5px;
+    -webkit-transition: .3s;
+    transition: .3s;
+    -webkit-filter: opacity(0.5);
+    filter: opacity(0.5);
+
+    &:hover {
+      -webkit-filter: none;
+      filter: none;
+    }
+  }
+}
+
+.card--cover {
+  .back,
+  .front {
+    background-size: cover;
+    background-position: 50%
+  }
+}
+
+.translate {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.card--cover-inactive {
+  opacity: .5;
+}
+
+.main-card:hover,
+.card:hover {
+  -webkit-box-shadow: 0 0 8px 9px rgba(0,0,0,0.28);
+  -moz-box-shadow: 0 0 8px 9px rgba(0,0,0,0.28);
+  box-shadow: 0 0 8px 9px rgba(0,0,0,0.28);
+}

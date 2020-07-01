@@ -1,0 +1,75 @@
+.container,
+.card__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px 15px;
+  max-width: 1440px;
+  margin: auto;
+}
+
+.none {
+  display: none;
+  box-sizing: border-box;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  font-size: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.rating {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  height: 40px;
+  overflow-x: hidden;
+  @include font($size: 36px);
+  color: #fc6262;
+}
+
+.star--error,
+.star--success {
+  flex-shrink: 0;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  background-size: 40px 40px;
+}
+
+.star--error {
+  background-image: url('/src/assets/img/star.svg');
+}
+
+.star--success {
+  background-image: url('/src/assets/img/star-win.svg');
+}
+
+.result {
+  position: absolute;
+  margin-top: 50px;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  background-color: white;
+
+  .result--success,
+  .result--failure {
+    height: 100%;
+    width: 100%;
+    background-position: top;
+    background-size: 50%;
+    background-repeat: no-repeat;
+  }
+
+  .result--success {
+    background-image: url('/src/assets/img/success.jpg');
+  }
+
+  .result--failure {
+    background-image: url('/src/assets/img/failure.jpg');
+  }
+}
